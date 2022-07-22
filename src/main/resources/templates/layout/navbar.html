@@ -1,0 +1,67 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!DOCTYPE html>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-3 shadow-sm" th:fragment="navbar">
+        <a href="#" class="navbar-brand font-weight-bold d-block d-lg-none">MegaMenu</a>
+
+        <button type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbars" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarContent" class="collapse navbar-collapse">
+            <ul  class="navbar-nav mx-auto">
+                <!-- Megamenu-->
+                <li sec:authorize="hasRole('BASIC')" class="nav-item dropdown megamenu"><a id="megamneu" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle font-weight-bold text-uppercase">UserMenu</a>
+                    <div  aria-labelledby="megamneu" class="dropdown-menu border-0 p-0 m-0">
+                        <div class="container">
+                            <div class="row bg-white rounded-0 m-0 shadow-sm">
+                                <div class="col-lg-7 col-xl-8">
+                                    <div class="p-4">
+                                        <div class="row">
+                                            <div  class="col-lg-6 mb-4">
+                                                <h6 class="font-weight-bold text-uppercase">User Menu</h6>
+                                                <ul class="list-unstyled">
+                                                    <li class="nav-item"><a href="" class="nav-link text-small pb-0">Unique Features</a></li>
+                                                    <li class="nav-item"><a href="" class="nav-link text-small pb-0 ">Image Responsive</a></li>
+                                                    <li class="nav-item"><a href="" class="nav-link text-small pb-0 ">Auto Carousel</a></li>
+                                                    <li class="nav-item"><a href="/logout" class="nav-link text-small pb-0 ">LOGOUT</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li sec:authorize="hasRole('BASIC')" class="nav-item dropdown megamenu"><a id="megamneu" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle font-weight-bold text-uppercase">AdminMenu</a>
+                    <div  aria-labelledby="megamneu" class="dropdown-menu border-0 p-0 m-0">
+                        <div class="container">
+                            <div class="row bg-white rounded-0 m-0 shadow-sm">
+                                <div class="col-lg-7 col-xl-8">
+                                    <div class="p-4">
+                                        <div class="row">
+                                            <div  class="col-lg-6 mb-4">
+                                                <h6 class="font-weight-bold text-uppercase">ADMIN Menu</h6>
+                                                <ul class="list-unstyled">
+                                                    <li class="nav-item"><a href="/shop/add" class="nav-link text-small pb-0">product add</a></li>
+                                                    <li class="nav-item"><a href="" class="nav-link text-small pb-0 ">Image Responsive</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <div sec:authorize="isAuthenticated()">
+                <li class="nav-item"><a href="/" sec:authentication="name" class="nav-link font-weight-bold text-uppercase"></a></li>
+                </div>
+                <li class="nav-item"><a href="/" class="nav-link font-weight-bold text-uppercase">Home</a></li>
+                <li class="nav-item"><a href="/user/login" sec:authorize="isAnonymous()" class="nav-link font-weight-bold text-uppercase">Login</a></li>
+                <li class="nav-item"><a href="/board/CustomerServiceBoard" class="nav-link font-weight-bold text-uppercase">Board</a></li>
+            </ul>
+        </div>
+    </nav>
+</html>

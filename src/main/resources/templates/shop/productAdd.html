@@ -1,0 +1,75 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:insert="~{layout/header :: header}"></head>
+
+
+<nav th:replace="~{layout/navbar :: navbar}"></nav>
+
+
+<!DOCTYPE html>
+
+<section class="vh-100" style="background-color: #2779e2;">
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-9">
+        <h1 class="text-white mb-4">Apply</h1>
+
+        <form th:action="@{/shop/add}" method="post" enctype="multipart/form-data">
+        <div class="card" style="border-radius: 15px;">
+          <div class="card-body">
+            <div class="row align-items-center pt-4 pb-3">
+              <div class="col-md-3 ps-5">
+                <h6 class="mb-0">Name</h6>
+              </div>
+              <div class="col-md-9 pe-5">
+                <input type="text" id="productName" name="productName" class="form-control form-control-lg" />
+              </div>
+            </div>
+            <hr class="mx-n3">
+            <div class="row align-items-center py-3">
+              <div class="col-md-3 ps-5">
+                <h6 class="mb-0">Price</h6>
+              </div>
+              <div class="col-md-9 pe-5">
+                <input type="text" id="price" name="price" class="form-control form-control-lg" placeholder="Price" />
+              </div>
+            </div>
+            <hr class="mx-n3">
+            <div class="row align-items-center py-3">
+              <div class="col-md-3 ps-5">
+                <h6 class="mb-0">content</h6>
+              </div>
+              <div class="col-md-9 pe-5">
+                <textarea class="form-control" name="content" id="content" rows="3" placeholder="Message sent to the employer"></textarea>
+              </div>
+            </div>
+            <hr class="mx-n3">
+            <div class="row align-items-center py-3">
+              <div class="col-md-3 ps-5">
+                <h6 class="mb-0">Upload CV</h6>
+              </div>
+              <div class="col-md-9 pe-5">
+                <input class="form-control form-control-lg" name="file" id="file" type="file" multiple="multiple" />
+                <div class="small text-muted mt-2">Upload your CV/Resume or any other relevant file. Max file size 50 MB</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mt-md-0 mt-3">
+                <label>startDay</label>
+                <input type="date" id="startDay" name="startDay" class="form-control" required>
+                <label>endDay</label>
+                <input type="date" id="endDay"  name="endDay" class="form-control" required>
+              </div>
+            </div>
+            <hr class="mx-n3">
+            <div class="px-5 py-4">
+              <button type="submit" class="btn btn-primary btn-lg">Apply</button>
+            </div>
+          </div>
+        </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+<script src="/js/shop/shopAdd.js"></script>

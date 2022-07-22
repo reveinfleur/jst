@@ -1,0 +1,47 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:insert="~{layout/header :: header}"></head>
+
+<link th:href="@{/css/joinFormCSS.css}" rel="stylesheet" />
+
+<nav th:replace="~{layout/navbar :: navbar}"></nav>
+<div class="wrapper rounded bg-white">
+    <div class="h3">Registration Form</div>
+
+    <form>
+    <div class="form">
+        <div class="row">
+            <div class="col-md-6 mt-md-0 mt-3">
+                <label>username</label>
+                <input type="text" id="username" class="form-control" required>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+                <label>password</label>
+                <input type="text" id="password" class="form-control" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mt-md-0 mt-3">
+                <label>Birthday</label>
+                <input type="date" id="birthday" class="form-control" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mt-md-0 mt-3">
+                <label>Email</label>
+                <input type="email" id="email" class="form-control" required>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+                <label>Phone Number</label>
+                <input type="tel" id="phoneNumber" class="form-control" required>
+            </div>
+        </div>
+        <div class=" my-md-2 my-3">
+            <label>address</label>
+            <input type="text" id="address" class="form-control" required>
+        </div>
+    </div>
+    </form>
+    <button id="btn-save" class="btn btn-primary mt-3">Submit</button>
+</div>
+<div th:insert="~{layout/footer :: footer}"></div>
+<script src="/js/user.js"></script>
