@@ -1,47 +1,123 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head th:insert="~{layout/header :: header}"></head>
 
+<style>
+    .field-error {
+        border-color: #dc3545;
+        color: #dc3545;
+    }
+</style>
 <link th:href="@{/css/joinFormCSS.css}" rel="stylesheet" />
 
 <nav th:replace="~{layout/navbar :: navbar}"></nav>
 <div class="wrapper rounded bg-white">
-    <div class="h3">Registration Form</div>
+    <div class="h3">Join Form</div>
 
-    <form>
+    <form th:action="@{/user/joinProc}" th:object="${usersDto}" method="post" >
     <div class="form">
         <div class="row">
             <div class="col-md-6 mt-md-0 mt-3">
                 <label>username</label>
-                <input type="text" id="username" class="form-control" required>
+                <input type="text" id="username" th:field="*{username}" th:errorclass="field-error"
+                       class="form-control" placeholder="username" required />
+                <div class="field-error" th:errors="*{username}">
+                </div>
             </div>
             <div class="col-md-6 mt-md-0 mt-3">
                 <label>password</label>
-                <input type="text" id="password" class="form-control" required>
+                <input type="password" id="password"  th:field="*{password}" class="form-control" required>
+                <div class="field-error" th:errors="*{password}">
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 mt-md-0 mt-3">
                 <label>Birthday</label>
-                <input type="date" id="birthday" class="form-control" required>
+                <input type="date" id="birthday"  th:field="*{birthday}" class="form-control" required>
+                <div class="field-error" th:errors="*{birthday}">
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 mt-md-0 mt-3">
                 <label>Email</label>
-                <input type="email" id="email" class="form-control" required>
+                <input type="email" id="email" th:field="*{email}" class="form-control" >
+                <div class="field-error" th:errors="*{email}">
+                </div>
             </div>
             <div class="col-md-6 mt-md-0 mt-3">
                 <label>Phone Number</label>
-                <input type="tel" id="phoneNumber" class="form-control" required>
+                <input type="tel" id="phoneNumber" th:field="*{phoneNumber}" class="form-control" required>
+                <div class="field-error" th:errors="*{phoneNumber}">
+                </div>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+                <label>인증번호</label>
+                <button type="button"  id="mail_send" class="btn btn-default" style="border-color: blue"><i class="fa fa-search"></i> 인증번호 전송</button>
+                <input type="tel" id="inputCheckSum"  th:field="*{inputCheckSum}" class="form-control" required>
+                <div class="field-error" th:errors="*{inputCheckSum}">
+                </div>
             </div>
         </div>
         <div class=" my-md-2 my-3">
             <label>address</label>
-            <input type="text" id="address" class="form-control" required>
+            <input class="form-control" th:field="*{zipcode}" style="width: 40%; display: inline; " placeholder="우편번호" name="addr1" id="addr1" type="text" readonly="readonly" >
+            <button type="button"  class="btn btn-default" style="border-color: black" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>
         </div>
-    </div>
+        <div class="form-group">
+            <input class="form-control" th:field="*{addressMain}" style="top: 5px;" placeholder="도로명 주소" name="addr2" id="addr2" type="text" readonly="readonly" />
+        </div>
+        <div class="form-group">
+            <input class="form-control"th:field="*{addressDetail}" placeholder="상세주소" name="addr3" id="addr3" type="text"  />
+        </div>
+        </div>
+        <input type="submit"  class="btn btn-primary mt-3" value="go"></input>
     </form>
-    <button id="btn-save" class="btn btn-primary mt-3">Submit</button>
+    </div>
+
 </div>
-<div th:insert="~{layout/footer :: footer}"></div>
+
 <script src="/js/user.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function execPostCode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+                // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+                if(fullRoadAddr !== ''){
+                    fullRoadAddr += extraRoadAddr;
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                console.log(data.zonecode);
+                console.log(fullRoadAddr);
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('addr1').value = data.zonecode; //5자리 새우편번호 사용
+                document.getElementById('addr2').value = fullRoadAddr;
+            }
+        }).open();
+    }
+
+
+</script>

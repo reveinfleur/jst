@@ -1,6 +1,11 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head th:insert="~{layout/header :: header}"></head>
-
+<style>
+  .field-error {
+    border-color: #dc3545;
+    color: #dc3545;
+  }
+</style>
 
 <nav th:replace="~{layout/navbar :: navbar}"></nav>
 
@@ -13,7 +18,7 @@
       <div class="col-xl-9">
         <h1 class="text-white mb-4">Apply</h1>
 
-        <form th:action="@{/shop/add}" method="post" enctype="multipart/form-data">
+        <form th:action="@{/shop/add}" method="post" th:object="${shopDto}" enctype="multipart/form-data">
         <div class="card" style="border-radius: 15px;">
           <div class="card-body">
             <div class="row align-items-center pt-4 pb-3">
@@ -21,7 +26,10 @@
                 <h6 class="mb-0">Name</h6>
               </div>
               <div class="col-md-9 pe-5">
-                <input type="text" id="productName" name="productName" class="form-control form-control-lg" />
+                <input type="text" id="productName" name="productName" th:field="*{productName}"
+                       th:errorclass="field-error" class="form-control form-control-lg" />
+                <div class="field-error" th:errors="*{productName}">
+                </div>
               </div>
             </div>
             <hr class="mx-n3">
@@ -30,8 +38,11 @@
                 <h6 class="mb-0">Price</h6>
               </div>
               <div class="col-md-9 pe-5">
-                <input type="text" id="price" name="price" class="form-control form-control-lg" placeholder="Price" />
+                <input type="text" id="price" name="price" th:field="*{price}"  th:errorclass="field-error" class="form-control form-control-lg" placeholder="Price" />
+                <div class="field-error" th:errors="*{price}">
+                </div>
               </div>
+
             </div>
             <hr class="mx-n3">
             <div class="row align-items-center py-3">
@@ -39,7 +50,9 @@
                 <h6 class="mb-0">content</h6>
               </div>
               <div class="col-md-9 pe-5">
-                <textarea class="form-control" name="content" id="content" rows="3" placeholder="Message sent to the employer"></textarea>
+                <textarea class="form-control" name="content" id="content" rows="3" th:field="*{content}"  th:errorclass="field-error" placeholder="in content"></textarea>
+                <div class="field-error" th:errors="*{content}">
+                </div>
               </div>
             </div>
             <hr class="mx-n3">
@@ -72,4 +85,3 @@
     </div>
   </div>
 </section>
-<script src="/js/shop/shopAdd.js"></script>

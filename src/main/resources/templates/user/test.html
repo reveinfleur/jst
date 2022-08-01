@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:insert="~{layout/header :: header}"></head>
+
+<style>
+    .field-error {
+        border-color: #dc3545;
+        color: #dc3545;
+    }
+</style>
+<link th:href="@{/css/joinFormCSS.css}" rel="stylesheet" />
+
+<nav th:replace="~{layout/navbar :: navbar}"></nav>
+<div class="wrapper rounded bg-white">
+    <div class="h3">Join Form</div>
+
+    <form th:action="@{/user/joinProcTest}" th:object="${usersDto}" method="post" >
+        <div class="form">
+            <div class="row">
+                <div class="col-md-6 mt-md-0 mt-3">
+                    <label>username</label>
+                    <input type="text" id="username" th:field="*{username}" th:errorclass="field-error"
+                           class="form-control" placeholder="username" />
+                    <div class="field-error" th:errors="*{username}">
+                    </div>
+                </div>
+                <div class="col-md-6 mt-md-0 mt-3">
+                    <label>password</label>
+                    <input type="password" id="password"  th:field="*{password}" class="form-control" required>
+                </div>
+            </div>
+        <input type="submit"  class="btn btn-primary mt-3">Submit</input>
+    </form>
+    <button id="btn-save" class="btn btn-primary mt-3">Submit</button>
+</div>
+<script src="/js/user.js"></script>

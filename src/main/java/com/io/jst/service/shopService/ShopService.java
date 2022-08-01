@@ -29,6 +29,7 @@ public class ShopService {
 
         Page<Shop> page = shopRepository.findAll(pageable);
 
+
         Page<ShopDto> map = page.map(Shop->new ShopDto(Shop.getId(), Shop.getPrice(), Shop.getProductName(),
                  Shop.getContent(), Shop.getFileName(), Shop.getFilePath(), Shop.getStartDay(), Shop.getEndDay()));
 
@@ -55,8 +56,9 @@ public class ShopService {
         shop.setFileName(fileName);
         shop.setFilePath("/files/"+fileName);
 
-        shopRepository.save(shop);
+        System.out.println(shopDto.toString());
 
+        shopRepository.save(shop);
 
     }
 

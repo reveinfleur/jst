@@ -9,7 +9,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum UserGrade {
     COMMON("ROLE_BASIC"),
-    ROLE_ADMIN("ROLE_ADMIN");
+    VIP("ROLE_VIP"),
+    ADMIN("ROLE_ADMIN");
 
     private String value;
 }

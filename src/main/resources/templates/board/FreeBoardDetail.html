@@ -1,0 +1,73 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="~{layout/header :: header}"></head>
+<nav th:replace="~{layout/navbar :: navbar}"></nav>
+<link th:href="@{/css/FreeBoardCSS.css}" rel="stylesheet" />
+
+<div class="container">
+    <form>
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" th:value="${frees.title}" readonly placeholder="Enter title" id="title">
+        </div>
+
+        <input type="hidden" class="form-control" th:value="${frees.id}" readonly placeholder="Enter title" id="boardId">
+        <div class="form-group">
+            <label for="content">Content</label>
+            <textarea readonly class="form-control summernote" th:text="${frees.content}" rows="5" id="content"></textarea>
+        </div>
+    </form>
+</div>
+
+<div class="container">
+    <div class="be-comment-block">
+        <h1 class="comments-title">Comments (3)</h1>
+        <div th:each="reply : ${frees.reply}">
+        <div class="be-comment">
+            <div class="be-img-comment">
+                <a href="blog-detail-2.html">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
+                </a>
+            </div>
+            <div class="be-comment-content">
+				<span class="be-comment-name">
+					<a href="blog-detail-2.html" th:text="${reply.users.username}"></a>
+					</span>
+                <span class="be-comment-time">
+					<i class="fa fa-clock-o" th:text="${reply.localDateTime}"></i>
+				</span>
+                <p class="be-comment-text" th:text="${reply.content}">
+                </p>
+            </div>
+        </div>
+        </div>
+
+        <form class="form-block">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group fl_icon">
+                        <div class="icon"><i class="fa fa-user"></i></div>
+                        <input class="form-input" type="text" placeholder="Your name">
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="form-group">
+                    <textarea id="reply_text" class="form-input" required="" placeholder="Your text"></textarea>
+                </div>
+            </div>
+            <button id="reply_save" class="btn btn-primary pull-right">submit</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    $('.summernote').summernote({
+        tabsize: 2,
+        height: 300
+    });
+</script>
+<script src="/js/FreeBoard.js"></script>
+
+
+
+

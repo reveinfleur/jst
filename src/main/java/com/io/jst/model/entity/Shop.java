@@ -30,6 +30,10 @@ public class Shop {
     private int star;
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name="userId")
+    private Users users;
+
     private String startDay;
 
     private String endDay;

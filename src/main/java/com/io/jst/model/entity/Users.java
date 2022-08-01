@@ -1,7 +1,6 @@
 package com.io.jst.model.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -9,8 +8,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Builder
 @Getter
-@Setter
+@AllArgsConstructor
 @SequenceGenerator(
         name = "USERS_SEQ_GEN",
         sequenceName = "USERS_SEQ",
@@ -18,6 +18,9 @@ import java.util.List;
         allocationSize = 1
 )
 public class Users {
+    public Users() {
+
+    }
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USERS_SEQ_GEN")
     @Column(name = "userId")
@@ -34,14 +37,29 @@ public class Users {
     private String address;
     private String email;
     private String birthday;
-    private int price;
-    private int bankAccount;
+
+    private String provider;
+    private String providerId;
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.REMOVE)
+    private List<Shop> shop;
 
     @OneToMany(mappedBy = "users")
     private List<UserCreditCard> creditCards;
 
+    @OneToMany(mappedBy = "users", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("localDateTime desc")
+    private List<Reply> reply;
+
+    @OneToMany(mappedBy = "users",cascade = CascadeType.REMOVE )
+    private List<FreeBoard> freeBoards;
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.REMOVE)
+    private List<CustomerBoard> customerBoards;
+
     @CreationTimestamp
     private LocalDateTime localDateTime;
+
 
 }
 

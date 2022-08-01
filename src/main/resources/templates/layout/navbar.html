@@ -10,7 +10,7 @@
         <div id="navbarContent" class="collapse navbar-collapse">
             <ul  class="navbar-nav mx-auto">
                 <!-- Megamenu-->
-                <li sec:authorize="hasRole('BASIC')" class="nav-item dropdown megamenu"><a id="megamneu" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle font-weight-bold text-uppercase">UserMenu</a>
+                <li sec:authorize="hasRole('BASIC') or hasRole('VIP') or hasRole('ADMIN')" class="nav-item dropdown megamenu"><a id="megamneu" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle font-weight-bold text-uppercase">UserMenu</a>
                     <div  aria-labelledby="megamneu" class="dropdown-menu border-0 p-0 m-0">
                         <div class="container">
                             <div class="row bg-white rounded-0 m-0 shadow-sm">
@@ -21,8 +21,8 @@
                                                 <h6 class="font-weight-bold text-uppercase">User Menu</h6>
                                                 <ul class="list-unstyled">
                                                     <li class="nav-item"><a href="" class="nav-link text-small pb-0">Unique Features</a></li>
-                                                    <li class="nav-item"><a href="" class="nav-link text-small pb-0 ">Image Responsive</a></li>
-                                                    <li class="nav-item"><a href="" class="nav-link text-small pb-0 ">Auto Carousel</a></li>
+                                                    <li class="nav-item"><a href="/user/userDetail" class="nav-link text-small pb-0 ">User Info</a></li>
+                                                    <li class="nav-item"><a href="/user/addPay" class="nav-link text-small pb-0 ">ADD PAY</a></li>
                                                     <li class="nav-item"><a href="/logout" class="nav-link text-small pb-0 ">LOGOUT</a></li>
                                                 </ul>
                                             </div>
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                 </li>
-                <li sec:authorize="hasRole('BASIC')" class="nav-item dropdown megamenu"><a id="megamneu" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle font-weight-bold text-uppercase">AdminMenu</a>
+                <li sec:authorize="hasRole('ADMIN')" class="nav-item dropdown megamenu"><a id="megamneu" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle font-weight-bold text-uppercase">AdminMenu</a>
                     <div  aria-labelledby="megamneu" class="dropdown-menu border-0 p-0 m-0">
                         <div class="container">
                             <div class="row bg-white rounded-0 m-0 shadow-sm">
@@ -60,7 +60,28 @@
                 </div>
                 <li class="nav-item"><a href="/" class="nav-link font-weight-bold text-uppercase">Home</a></li>
                 <li class="nav-item"><a href="/user/login" sec:authorize="isAnonymous()" class="nav-link font-weight-bold text-uppercase">Login</a></li>
-                <li class="nav-item"><a href="/board/CustomerServiceBoard" class="nav-link font-weight-bold text-uppercase">Board</a></li>
+
+                <li sec:authorize="hasRole('BASIC') or hasRole('VIP') or hasRole('ADMIN')" class="nav-item dropdown megamenu"><a id="megamneu" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle font-weight-bold text-uppercase">BoardMenu</a>
+                    <div  aria-labelledby="megamneu" class="dropdown-menu border-0 p-0 m-0">
+                        <div class="container">
+                            <div class="row bg-white rounded-0 m-0 shadow-sm">
+                                <div class="col-lg-7 col-xl-8">
+                                    <div class="p-4">
+                                        <div class="row">
+                                            <div  class="col-lg-6 mb-4">
+                                                <h6 class="font-weight-bold text-uppercase">Board Menu</h6>
+                                                <ul class="list-unstyled">
+                                                    <li class="nav-item"><a href="/board/FreeBoard" class="nav-link text-small pb-0">Free board</a></li>
+                                                    <li class="nav-item"><a href="/board/CustomerServiceBoard" class="nav-link text-small pb-0 ">CustomerServiceBoard</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>

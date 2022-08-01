@@ -23,9 +23,8 @@
         <div class="container-fliud">
             <div class="wrapper row">
                 <div class="preview col-md-6">
-
                     <div class="preview-pic tab-content">
-                        <div class="tab-pane active" id="pic-1"><img src="http://placekitten.com/400/252" /></div>
+                        <div class="tab-pane active" id="pic-1"><img th:src="${shops.filePath}" /></div>
                         <div class="tab-pane" id="pic-2"><img src="http://placekitten.com/400/252" /></div>
                         <div class="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252" /></div>
                         <div class="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252" /></div>
@@ -38,10 +37,9 @@
                         <li><a data-target="#pic-4" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
                         <li><a data-target="#pic-5" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
                     </ul>
-
                 </div>
                 <div class="details col-md-6">
-                    <h3 class="product-title">men's shoes fashion</h3>
+                    <h3 class="product-title">[[${shops.productName}]]</h3>
                     <div class="rating">
                         <div class="stars">
                             <span class="fa fa-star checked"></span>
@@ -52,21 +50,22 @@
                         </div>
                         <span class="review-no">41 reviews</span>
                     </div>
-                    <p class="product-description">Suspendisse quos? Tempus cras iure temporibus? Eu laudantium cubilia sem sem! Repudiandae et! Massa senectus enim minim sociosqu delectus posuere.</p>
-                    <h4 class="price">current price: <span>$180</span></h4>
+                    <p class="product-description">[[${shops.content}]]</p>
+                    <h4 class="price">current price: <span>[[${shops.price}]]</span></h4>
                     <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
                     <h5 class="sizes">DATE:
-                        <span class="size" data-toggle="tooltip" title="small">2021-05-05</span>
+                        <span class="size" data-toggle="tooltip" title="small">[[${shops.startDay}]]</span>
                         <span class="size" data-toggle="tooltip" title="small">~</span>
-                        <span class="size" data-toggle="tooltip" title="small">2011-20-54</span>
+                        <span class="size" data-toggle="tooltip" title="small">[[${shops.endDay}]]</span>
                     </h5>
                     <h5 class="colors">colors:
                         <span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
                         <span class="color green"></span>
                         <span class="color blue"></span>
                     </h5>
+                    <input type="hidden" id="shopId" th:value="${shops.id}">
                     <div class="action">
-                        <button class="add-to-cart btn btn-default" type="button">go</button>
+                        <button class="add-to-cart btn btn-default" th:onclick="|location.href='@{/shop/payment/{id}(id=${shops.id})}'|" type="button">구입</button>
                         <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
                     </div>
                 </div>
@@ -76,3 +75,4 @@
 </div>
 </body>
 </html>
+<script src="/js/shop/shopAdd.js"></script>

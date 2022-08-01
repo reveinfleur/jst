@@ -4,8 +4,11 @@ import com.io.jst.model.UserGrade;
 import com.io.jst.model.dto.BoardSearchCondition;
 import com.io.jst.model.dto.CSBoardDto;
 import com.io.jst.model.entity.CustomerBoard;
+import com.io.jst.model.entity.FreeBoard;
+import com.io.jst.model.entity.Reply;
 import com.io.jst.model.entity.Users;
 import com.io.jst.repository.CSBoardRepository;
+import com.io.jst.repository.FreeBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -22,6 +25,7 @@ import java.util.List;
 public class BoardService {
 
     private final CSBoardRepository csBoardRepository;
+    private final FreeBoardRepository freeBoardRepository;
     @Transactional
     public void save(CSBoardDto csBoardDto){
 
@@ -56,7 +60,6 @@ public class BoardService {
     @Transactional(readOnly = true)
     public Page<CSBoardDto> list(Pageable pageable){
         Page<CustomerBoard> page = csBoardRepository.findAll(pageable);
-
 
         Page<CSBoardDto> map = page.map(CustomerBoard -> new CSBoardDto(CustomerBoard.getId(),
                 CustomerBoard.getTitle(), CustomerBoard.getLocalDateTime(), CustomerBoard.getUsers(), CustomerBoard.getContent()));

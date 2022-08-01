@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="~{layout/header :: header}"></head>
 
 <link th:href="@{/css/shop/payment.css}" rel="stylesheet" />
@@ -12,7 +12,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <main class="page payment-page">
@@ -20,49 +19,56 @@
         <div class="container">
             <div class="block-heading">
                 <h2>Payment</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p>
+                <p id="shopId" th:text="${shops.id}"></p>
             </div>
             <form>
                 <div class="products">
                     <h3 class="title">Checkout</h3>
+
                     <div class="item">
-                        <span class="price">$200</span>
-                        <p class="item-name">Product 1</p>
-                        <p class="item-description">Lorem ipsum dolor sit amet</p>
+                        <span class="price" th:text="${shops.price}"></span>
+                        <p class="item-name" th:text="${shops.productName}"></p>
+                        <div sec:authorize="hasRole('VIP')">
+                        <span class="price" th:text="${shops.discountPrice}"></span>
+                        <p class="item-name" >VIP 할인</p>
+                        </div>
                     </div>
-                    <div class="item">
-                        <span class="price">$120</span>
-                        <p class="item-name">Product 2</p>
-                        <p class="item-description">Lorem ipsum dolor sit amet</p>
-                    </div>
-                    <div class="total">Total<span class="price">$320</span></div>
+                    <div sec:authorize="hasRole('ADMIN') or hasRole('BASIC')" class="total">Total<span class="price" id="shopPrice" th:text="${shops.price}"></span></div>
+                    <div sec:authorize="hasRole('VIP')" class="total">Total<span class="price" id="shopTotalPrice" th:text="${shops.priceTotal}"></span></div>
                 </div>
-                <div class="card-details">
+                <div style="text-align: center">
+                    <div><h4>카드선택</h4></div>
+                    <select id="selectBox" th:field="*{cards}" class="form-select">
+                        <option th:each="card : ${cards}" th:value="${card.id}" th:text="${card.cardName}"></option>
+                    </select>
+                    <button id="card_select" style="text-align: center">go</button>
+                </div>
+
+                <div class="card-details" th:if = "${secards != null}">
                     <h3 class="title">Credit Card Details</h3>
                     <div class="row">
                         <div class="form-group col-sm-7">
-                            <label for="card-holder">Card Holder</label>
-                            <input id="card-holder" type="text" class="form-control" placeholder="Card Holder" aria-label="Card Holder" aria-describedby="basic-addon1">
+                            <label for="card-holder">Card Name</label>
+                            <input id="card-holder" type="text" th:value="${secards.cardName}" class="form-control" placeholder="Card Holder" aria-label="Card Holder" readonly aria-describedby="basic-addon1">
                         </div>
                         <div class="form-group col-sm-5">
                             <label for="">Expiration Date</label>
                             <div class="input-group expiration-date">
-                                <input type="text" class="form-control" placeholder="MM" aria-label="MM" aria-describedby="basic-addon1">
-                                <span class="date-separator">/</span>
-                                <input type="text" class="form-control" placeholder="YY" aria-label="YY" aria-describedby="basic-addon1">
+                                <input type="text" class="form-control" th:value="${secards.expireDate}" placeholder="MM" readonly aria-label="MM" aria-describedby="basic-addon1">
                             </div>
                         </div>
                         <div class="form-group col-sm-8">
                             <label for="card-number">Card Number</label>
-                            <input id="card-number" type="text" class="form-control" placeholder="Card Number" aria-label="Card Holder" aria-describedby="basic-addon1">
+                            <input id="card-number" type="text" class="form-control" th:value="${secards.cardNumber}" placeholder="Card Number" readonly aria-label="Card Holder" aria-describedby="basic-addon1">
                         </div>
                         <div class="form-group col-sm-4">
                             <label for="cvc">CVC</label>
-                            <input id="cvc" type="text" class="form-control" placeholder="CVC" aria-label="Card Holder" aria-describedby="basic-addon1">
+                            <input id="cvc" type="text" class="form-control" placeholder="CVC" th:value="${secards.cvc}" aria-label="Card Holder" readonly aria-describedby="basic-addon1">
                         </div>
                         <div class="form-group col-sm-12">
-                            <button type="button" class="btn btn-primary btn-block">Proceed</button>
+                            <button type="button" id="pay_btn" class="btn btn-primary btn-block">Proceed</button>
                         </div>
+                        <!--<button id="pay_btn">gogogogogo</button>-->
                     </div>
                 </div>
             </form>
@@ -74,3 +80,4 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>
+<script src="/js/shop/payment.js"></script>

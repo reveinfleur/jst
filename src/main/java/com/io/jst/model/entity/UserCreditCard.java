@@ -18,6 +18,8 @@ public class UserCreditCard {
     private Users users;
 
     private int price;
+
+    @Column(unique = true)
     private String cardName;
     private String expireDate;
     private int cvc;

@@ -9,12 +9,13 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 public class ShopDto {
 
     private long id;
 
     private int price;
+    private int discountPrice;
+    private int priceTotal;
 
     private String productName;
 
@@ -26,8 +27,8 @@ public class ShopDto {
     private String startDay;
     private String endDay;
 
-
-    private List<FileDto> fileDto;
+    public ShopDto() {
+    }
 
     public ShopDto(long id, int price, String productName, String content, String fileName, String filePath, String startDay, String endDay) {
         this.id = id;
